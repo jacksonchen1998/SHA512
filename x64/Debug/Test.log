@@ -1,0 +1,5 @@
+﻿  Source.cpp
+C:\Users\user\Desktop\Test\Test\Source.cpp(134,24): warning C4244: '=': 將 'unsigned __int64' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\user\Desktop\Test\Test\Source.cpp(137,42): warning C4244: '=': 將 'unsigned __int64' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\user\Desktop\Test\Test\Source.cpp(147,40): warning C4244: '=': 將 'unsigned __int64' 轉換為 'int'，由於類型不同，可能導致資料遺失
+  Test.vcxproj -> C:\Users\user\Desktop\Test\x64\Debug\Test.exe
