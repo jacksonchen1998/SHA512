@@ -199,7 +199,7 @@ int main() {
 		fprintf(fp, "%016I64x\n", HashI[j]);//輸入到指定txt file中
 		byte_size += HashI[j]; 
 	}
-	cout << "Spend time : "<< int(byte_size) / time<< " bytes/second \n";//輸出運算bytes per second
+	cout << "Spend time : "<< byte_size / time<< " bytes/second \n";//輸出運算bytes per second
 	fclose(fp);
 	cin >> lastChar[0];
 	return 0;
