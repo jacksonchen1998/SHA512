@@ -1,4 +1,4 @@
-﻿///SHA-512/
+///SHA-512/
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
@@ -12,7 +12,7 @@
 #define MUL_MB (MUL_KB*1024)
 
 using namespace std;
-unsigned long long datas[0x2000000];//load 起始資料、
+unsigned long long datas[0x2000000];//load 起始資料
 unsigned long long T1, T2, W[80];//當前使用的訊息，和每輪中保存的消息
 unsigned long long HashI_1[8];//中間部分结果
 unsigned long long HashI[8];//最终輸出结果
@@ -67,13 +67,13 @@ void SHA_512(int N) {
 	int i, t, j;
 	for (i = 0; i < N;i++) {
 		for (j = 0; j < 16;j++) {
-			W[j] = datas[i * 16 + j];//由全部資料中载入本次所需的訊息
+			W[j] = datas[i * 16 + j];//由全部資料中載入本次所需的訊息
 		}	
 		for (j = 16;j < 80;j++) {//計算出第16-79輪的訊息
 			W[j] = (ROTR(W[j - 2], 19) ^ ROTR(W[j - 2], 61) ^ (W[j - 2] >> 6)) + W[j - 7] + (ROTR(W[j - 15], 1) ^ ROTR(W[j - 15], 8) ^ (W[j - 15] >> 7)) + W[j - 16];
 		}
 		for (j = 0;j < 8;j++)
-			HashI_1[j] = HashI[j];//當每次输入開始之前，將之前得到的输出load進去，之後對中間的hashI_1值進行操作，输出给HashI
+			HashI_1[j] = HashI[j];//當每次輸入開始之前，將之前得到的輸出load進去，之後對中間的hashI_1值進行操作，輸出给HashI
 		for (t = 0;t < 80;t++) {//第80輪操作
 			T1 = HashI_1[7] + ((HashI_1[4] & HashI_1[5]) ^ ((~HashI_1[4]) & HashI_1[6]))
 				+ (ROTR(HashI_1[4], 14) ^ ROTR(HashI_1[4], 18) ^ ROTR(HashI_1[4], 41)) + W[t] + Kt[t];
@@ -96,7 +96,7 @@ void SHA_512(int N) {
 			}
 		}
 		for (j = 0;j < 8;j++)
-			HashI[j] += HashI_1[j];//得到输出
+			HashI[j] += HashI_1[j];//得到輸出
 	}
 }
 
@@ -133,7 +133,7 @@ int main() {
 	M = (TxtLength >> 28) + 1;//得到資料有多少個256m的區塊
 	for (t = 0; t < M;t++) {
 		if (t == M - 1) {
-			N = (TxtLength - (1 << 28) * (M - 1)) >> 7;//當只剩下最後一组256m時，計算剩下的1024组数-1
+			N = (TxtLength - (1 << 28) * (M - 1)) >> 7;//當只剩下最後一组256m時，計算剩下的1024组數-1
 			for (i = 0;i < N;i++) {//將剩下的1024的组先load進來
 				datasf.read((char*)lastChar, 128);//一次讀取128個char
 				for (k = 0;k < 16;k++) {
@@ -160,12 +160,12 @@ int main() {
 					lastChar[i] = 0;
 			}
 			else {
-				lastChar[i++] = 128;//最高位填補1之后填補0 
+				lastChar[i++] = 128;//最高位填補1之後填補0 
 				for (;i < 112;i++)
 					lastChar[i] = 0;
 			}
 			//最後128位是訊息長度，第一個數固定為0，第二個數直接為TextLength * 8
-			//将資料從lastChar字组中load到datas数组中
+			//將資料從 lastChar 字组中 load 到 datas 數组中
 			for (i = 0;i < 14;i++) {
 				datas[j] = 0;
 				for (k = 0;k < 8;k++)
@@ -174,7 +174,7 @@ int main() {
 			}
 			datas[j++] = 0;
 			datas[j++] = TxtLength << 3;
-			N = j >> 4;//j的數量肯定是合理的，则可以由此時j的數量得到最後1024的字数
+			N = j >> 4;//可以由此時j的數量得到最後1024的字數
 			SHA_512(N);//進行hash function
 		}
 		else {
